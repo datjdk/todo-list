@@ -20,19 +20,22 @@ code {
 }
 
 .done {
-  padding: 3px;
-  margin: 5px 5px 15px 5px;
-  text-decoration: line-through;
+  margin-top: 15px;
+  color: red;
 }
 
-.close {
-  padding: 3px;
-  margin-left: 2px;
+.btn-close {
+  background-color: #ffffff;
+  border: none;
   color: red;
-  background-color: #cccccc;
+}
+
+.btn-check {
+  background-color: #ffffff;
+  border: none;
+  color: green;
 }
 
 .item {
-  padding: 5px;
-  margin: 5px 5px 15px 5px;
+  margin-top: 15px;
 }
