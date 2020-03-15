@@ -27,7 +27,7 @@ class ToDoItem extends React.Component {
             <div className={itemClass + " row"}>
                 <div className="col-md-6">
                     <button className="btn-check" onClick={this.markDone}><i className="fa fa-check"></i></button>
-                    <span className="display-4">{this.props.item.text}</span>
+                    <span className="display-6">{this.props.item.text}</span>
                     <button className="btn-close" onClick={this.removeItem}><i className="fa fa-close"></i></button>
                 </div>
             </div>
@@ -109,13 +109,13 @@ class ToDoForm extends React.Component {
                         style={{ maringTop: 10 }}
                     >
                         <Button
-                            className="col"
+                            className="col-md-2"
                             style={{ marginRight: 5 }}
                             variant="primary"
                             onClick={this.filterActive}
                         >Active</Button>
                         <Button
-                            className="col"
+                            className="col-md-2"
                             style={{ marginLeft: 5 }}
                             variant="warning"
                             onClick={this.filterDone}
