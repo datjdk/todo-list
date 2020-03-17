@@ -140,12 +140,15 @@ class ToDoApp extends React.Component {
             }],
             filterList: [],
             filter: "active",
+            isConfirmModalOpen: false
         }
         this.addNewItem = this.addNewItem.bind(this);
         this.removeItem = this.removeItem.bind(this);
         this.markDone = this.markDone.bind(this);
         this.filterActive = this.filterActive.bind(this);
         this.filterDone = this.filterDone.bind(this);
+        this.handleConfirmTaskModal = this.handleConfirmTaskModal.bind(this);
+        this.closeTaskConfirm = this.closeTaskConfirm.bind(this);
     }
 
     addNewItem(newTodoItem) {
@@ -195,7 +198,7 @@ class ToDoApp extends React.Component {
 
         this.setState({
             filterList: newList,
-            needToConfirmTask: true
+            isConfirmModalOpen: true,
         });
     }
 
@@ -215,7 +218,26 @@ class ToDoApp extends React.Component {
         });
     }
 
+    openConfirmTaskModal() {
+        this.setState({
+            isConfirmModalOpen: true,
+        });
+    }
+
+    handleConfirmTaskModal() {
+        this.setState({
+            isConfirmModalOpen: false,
+        })
+    }
+
+    closeTaskConfirm() {
+        this.setState({
+            isConfirmModalOpen: false,
+        });
+    }
+
     render() {
+        const confirmTitle = this.state.filter === "active" ? "Have you done?" : "Try harder!";
         return (
             <div className="container">
                 <ToDoForm
@@ -228,6 +250,15 @@ class ToDoApp extends React.Component {
                     markDone={this.markDone}
                     removeItem={this.removeItem}
                 />
+
+                {this.state.isConfirmModalOpen ?
+                    <TaskConfirmModal
+                        confirmTitle={confirmTitle}
+                        handleConfirmTaskModal={this.handleConfirmTaskModal}
+                        closeTaskConfirm={this.closeTaskConfirm}
+                    /> : null
+                }
+
             </div>
         );
     }
@@ -235,6 +266,20 @@ class ToDoApp extends React.Component {
     componentDidMount() {
         this.filterActive();
     }
+}
+
+function TaskConfirmModal(props) {
+    return (
+        <>
+            <Modal show={true}>
+                <Modal.Header>{props.confirmTitle}</Modal.Header>
+                <Modal.Footer>
+                    <Button onClick={props.handleConfirmTaskModal}>OK</Button>
+                    <Button onClick={props.closeTaskConfirm}>Close</Button>
+                </Modal.Footer>
+            </Modal>
+        </>
+    );
 }
 
 ReactDom.render(<ToDoApp />, document.getElementById("root"));
