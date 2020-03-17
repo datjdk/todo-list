@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import './index.css'
 
-import { Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 class ToDoItem extends React.Component {
     constructor(props) {
@@ -22,12 +23,14 @@ class ToDoItem extends React.Component {
     }
 
     render() {
-        const itemClass = this.props.item.isDone ? "done" : "item";
+        const itemClass = this.props.item.isDone ? "done" : "";
         return (
-            <div className={itemClass + " row"}>
+            <div className="row item">
                 <div className="col-md-6">
-                    <button className="btn-check" onClick={this.markDone}><i className="fa fa-check"></i></button>
-                    <span className="display-6">{this.props.item.text}</span>
+                    <span
+                        className={itemClass}
+                        onClick={this.markDone}
+                    >{this.props.item.text}</span>
                     <button className="btn-close" onClick={this.removeItem}><i className="fa fa-close"></i></button>
                 </div>
             </div>
@@ -111,7 +114,7 @@ class ToDoForm extends React.Component {
                         <Button
                             className="col-md-2"
                             style={{ marginRight: 5 }}
-                            variant="primary"
+                            variant="success"
                             onClick={this.filterActive}
                         >Active</Button>
                         <Button
@@ -136,7 +139,7 @@ class ToDoApp extends React.Component {
                 isDone: false,
             }],
             filterList: [],
-            isDisplayActive: true,
+            filter: "active",
         }
         this.addNewItem = this.addNewItem.bind(this);
         this.removeItem = this.removeItem.bind(this);
@@ -182,16 +185,17 @@ class ToDoApp extends React.Component {
         const markedItem = newItemList[index];
         markedItem.isDone = !markedItem.isDone;
 
-        var filterList;
-        const isDisplayActive = this.state.isDisplayActive;
-        if (isDisplayActive) {
-            filterList = newItemList.slice().filter(item => !item.isDone);
+        const filter = this.state.filter;
+        let newList;
+        if (filter && filter === "active") {
+            newList = newItemList.slice().filter(item => !item.isDone);
         } else {
-            filterList = newItemList.slice().filter(item => item.isDone);
+            newList = newItemList.slice().filter(item => item.isDone);
         }
 
         this.setState({
-            filterList: filterList,
+            filterList: newList,
+            needToConfirmTask: true
         });
     }
 
@@ -199,7 +203,7 @@ class ToDoApp extends React.Component {
         const newItemList = this.state.items.slice().filter(item => !item.isDone);
         this.setState({
             filterList: newItemList,
-            isDisplayActive: true
+            filter: "active"
         });
     }
 
@@ -207,7 +211,7 @@ class ToDoApp extends React.Component {
         const newItemList = this.state.items.slice().filter(item => item.isDone);
         this.setState({
             filterList: newItemList,
-            isDisplayActive: false
+            filter: "done"
         });
     }
 

@@ -19,23 +19,21 @@ code {
   background-color: #cccccc;
 }
 
-.done {
-  margin-top: 15px;
-  color: red;
-}
-
 .btn-close {
   background-color: #ffffff;
   border: none;
   color: red;
 }
 
-.btn-check {
-  background-color: #ffffff;
-  border: none;
-  color: green;
-}
-
 .item {
   margin-top: 15px;
+}
+
+.item:hover {
+  cursor: pointer;
+}
+
+.done {
+  margin-top: 15px;
+  color: orangered;
 }
